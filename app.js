@@ -1,13 +1,9 @@
 // Barangay Management System - Frontend Application
 const app = (() => {
-  const API_BASE = 'api/';
-
-  // ==================== STATE ====================
+  const API_BASE = 'api/auth.php';
   
   let currentUser = null;
   let officials = [];
-
-  // ==================== DOM ELEMENTS ====================
   
   const loginPage = document.getElementById('login-page');
   const registerPage = document.getElementById('register-page');
@@ -33,8 +29,6 @@ const app = (() => {
   const panelBody = document.getElementById('panel-body');
   const pageTitle = document.getElementById('page-title');
   const officialsList = document.getElementById('officials-list');
-
-  // ==================== API CALLS ====================
   
   async function apiCall(endpoint, method = 'GET', data = null) {
     const options = {
@@ -63,8 +57,6 @@ const app = (() => {
       return { success: false, error: error.message };
     }
   }
-
-  // ==================== AUTHENTICATION ====================
   
   async function register() {
     const name = document.getElementById('register-name').value.trim();
@@ -148,8 +140,6 @@ const app = (() => {
       currentUser = JSON.parse(localStorage.getItem('user') || 'null');
     }
   }
-
-  // ==================== API FUNCTIONS ====================
   
   async function fetchOfficials() {
     const result = await apiCall('officials.php', 'GET');
@@ -178,8 +168,6 @@ const app = (() => {
     return [];
   }
 
-  // ==================== UI HELPERS ====================
-  
   function showError(element, message) {
     element.textContent = message;
     element.classList.remove('hidden');
@@ -211,8 +199,6 @@ const app = (() => {
     });
   }
 
-  // ==================== NAVIGATION ====================
-  
   function showLogin() {
     loginPage.classList.add('active');
     registerPage.classList.remove('active');
@@ -233,8 +219,6 @@ const app = (() => {
     showLogin();
   });
 
-  // ==================== VIEW RENDERING ====================
-  
   async function showView(view) {
     switch (view) {
       case 'officials':
@@ -366,8 +350,6 @@ const app = (() => {
     return html;
   }
 
-  // ==================== MENU ====================
-  
   hamburger.addEventListener('click', () => {
     burgerMenu.classList.toggle('hidden');
   });
@@ -386,8 +368,6 @@ const app = (() => {
     }
   });
 
-  // ==================== EVENT LISTENERS ====================
-  
   loginBtn.addEventListener('click', (e) => {
     e.preventDefault();
     login();
@@ -402,8 +382,6 @@ const app = (() => {
     logout();
   });
 
-  // ==================== APP INITIALIZATION ====================
-  
   async function renderApp() {
     if (currentUser) {
       body.classList.remove('auth-bg');
@@ -426,8 +404,6 @@ const app = (() => {
     renderApp();
   }
 
-  // ==================== PUBLIC API ====================
-  
   return {
     init
   };
