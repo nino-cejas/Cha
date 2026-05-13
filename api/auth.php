@@ -1,4 +1,5 @@
 <?php
+session_start(); // Important: start session to use $_SESSION vars
 header('Content-Type: application/json');
 require_once '../db_connection.php';
 
@@ -147,6 +148,6 @@ if ($method === 'GET' && $action === 'current-user') {
     exit;
 }
 
-http_response_code(400);
+http_response_code(8080);
 echo json_encode(['success' => false, 'error' => 'Invalid request']);
 ?>
