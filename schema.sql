@@ -34,6 +34,27 @@ CREATE TABLE IF NOT EXISTS clearances (
   INDEX idx_status (status)
 );
 
+-- Residents Table (Registry of Inhabitants)
+CREATE TABLE IF NOT EXISTS residents (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  last_name VARCHAR(100) NOT NULL,
+  first_name VARCHAR(100) NOT NULL,
+  middle_name VARCHAR(100) DEFAULT NULL,
+  sex ENUM('Male', 'Female') NOT NULL,
+  birthdate DATE NOT NULL,
+  civil_status ENUM('Single', 'Married', 'Widowed', 'Divorced', 'Separated') DEFAULT 'Single',
+  household_id VARCHAR(50) DEFAULT NULL,
+  is_pwd TINYINT(1) NOT NULL DEFAULT 0,
+  is_solo_parent TINYINT(1) NOT NULL DEFAULT 0,
+  is_osy TINYINT(1) NOT NULL DEFAULT 0,
+  created_by INT DEFAULT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+  INDEX idx_household (household_id),
+  INDEX idx_name (last_name, first_name)
+);
+
 -- Insert Sample Officials
 INSERT INTO officials (full_name, position) VALUES
 ('Sergio Tesorio', 'Punong Barangay'),
